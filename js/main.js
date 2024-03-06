@@ -4,7 +4,7 @@ const right = document.querySelector('.my-next');
 const imgList = document.querySelector('.my-thumbnails');
 
 
-
+let counterImg = 0;
 
 
 const images = [
@@ -42,9 +42,9 @@ images.forEach(img =>{
     
     imgWrapper.innerHTML += `
 
-    <div class="my-carousel-item active">
+    <div class="my-carousel-item active img-pos hide show">
         <img class="img-fluid" src="${img.url}" alt="">
-        <div class="item-description px-3">
+        <div class="item-description px-3 words-pos">
             <h2>${img.title}</h2>
             <p>${img.description}</p>
         </div>
@@ -52,9 +52,55 @@ images.forEach(img =>{
     `;
     
     imgList.innerHTML += `
-    <div class="my-thumbnail active">
+    <div class="my-thumbnail active images-list opacity">
         <img class="img-fluid" src="${img.url}" alt="">
     </div>
     
     `
 })
+
+
+const itemsCollection = document.getElementsByClassName('show');
+itemsCollection[counterImg].classList.remove('hide');
+
+const smallImages = document.getElementsByClassName('images-list');
+smallImages[0].classList.remove('opacity');
+
+
+left.addEventListener('click', function(){
+    scrollLeft();
+})
+right.addEventListener('click', function(){
+    scrollRight();
+})
+
+function scrollLeft(){
+    smallImages[counterImg].classList.add('opacity');
+
+    itemsCollection[counterImg--].classList.add('hide');
+    
+    if(counterImg < 0){
+      counterImg = images.length - 1;
+    }
+  
+    itemsCollection[counterImg].classList.remove('hide');
+  
+    smallImages[counterImg].classList.remove('opacity');
+    
+    right.classList.remove('hide');
+}
+
+function scrollRight(){
+    left.classList.remove('hide');
+  
+    smallImages[counterImg].classList.add('opacity');
+    
+    itemsCollection[counterImg++].classList.add('hide');
+    
+   if(counterImg === images.length){
+    counterImg = 0;
+   }
+    itemsCollection[counterImg].classList.remove('hide');
+    
+    smallImages[counterImg].classList.remove('opacity');
+  }
