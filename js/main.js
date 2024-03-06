@@ -1,10 +1,9 @@
 const imgWrapper = document.querySelector('.my-carousel-images');
-const left = document.querySelector('.my-previous');
-const right = document.querySelector('.my-next');
+
 const imgList = document.querySelector('.my-thumbnails');
 
 
-let counterImg = 0;
+
 
 
 const images = [
@@ -42,9 +41,9 @@ images.forEach(img =>{
     
     imgWrapper.innerHTML += `
 
-    <div class="my-carousel-item active img-pos hide show">
+    <div class="my-carousel-item ">
         <img class="img-fluid" src="${img.url}" alt="">
-        <div class="item-description px-3 words-pos">
+        <div class="item-description px-3">
             <h2>${img.title}</h2>
             <p>${img.description}</p>
         </div>
@@ -52,55 +51,45 @@ images.forEach(img =>{
     `;
     
     imgList.innerHTML += `
-    <div class="my-thumbnail active images-list opacity">
+    <div class="my-thumbnail">
         <img class="img-fluid" src="${img.url}" alt="">
     </div>
     
     `
 })
 
+const left = document.querySelector('.my-previous');
+const right = document.querySelector('.my-next');
 
-const itemsCollection = document.getElementsByClassName('show');
-itemsCollection[counterImg].classList.remove('hide');
+let counterImg = 0;
+const allImages = document.querySelectorAll('.my-carousel-item');
+allImages[0].classList.add('active');
 
-const smallImages = document.getElementsByClassName('images-list');
-smallImages[0].classList.remove('opacity');
+const allLittleImages = document.querySelectorAll('.my-thumbnail');
+allLittleImages[0].classList.add('active');
 
 
 left.addEventListener('click', function(){
-    scrollLeft();
-})
-right.addEventListener('click', function(){
-    scrollRight();
-})
-
-function scrollLeft(){
-    smallImages[counterImg].classList.add('opacity');
-
-    itemsCollection[counterImg--].classList.add('hide');
-    
+    allImages[counterImg].classList.remove('active');
+    allLittleImages[counterImg].classList.remove('active');
+    counterImg--;
     if(counterImg < 0){
-      counterImg = images.length - 1;
+        counterImg = allImages.length -1;
     }
-  
-    itemsCollection[counterImg].classList.remove('hide');
-  
-    smallImages[counterImg].classList.remove('opacity');
-    
-    right.classList.remove('hide');
-}
+    allImages[counterImg].classList.add('active');
+    allLittleImages[counterImg].classList.add('active');
+})
 
-function scrollRight(){
-    left.classList.remove('hide');
-  
-    smallImages[counterImg].classList.add('opacity');
-    
-    itemsCollection[counterImg++].classList.add('hide');
-    
-   if(counterImg === images.length){
-    counterImg = 0;
-   }
-    itemsCollection[counterImg].classList.remove('hide');
-    
-    smallImages[counterImg].classList.remove('opacity');
-  }
+
+right.addEventListener('click', function(){
+    allImages[counterImg].classList.remove('active');
+    allLittleImages[counterImg].classList.remove('active');
+    counterImg++;
+    if(counterImg >= allImages.length){
+        counterImg = 0;
+    }
+    allImages[counterImg].classList.add('active');
+    allLittleImages[counterImg].classList.add('active');
+
+})
+

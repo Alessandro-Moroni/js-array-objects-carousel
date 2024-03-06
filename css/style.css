@@ -109,19 +109,3 @@ div#my-carousel .my-thumbnails .my-thumbnail.active{
 }
 
 
-.hide{
-    display: none;
-  }
-
-.opacity{
-    opacity: .5;
-}
-
-.img-pos{
-    position: relative;
-}
-.words-pos{
-    position: absolute;
-    color: black;
-}
-
